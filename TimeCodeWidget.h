@@ -2,17 +2,18 @@
 #define TIMECODE_H
 
 #include <QWidget>
+#include "MainWindow.h"
 
 class TimeCodeWidget : public QWidget {
 	Q_OBJECT
 private:
-	std::vector<char> data_;
+	std::vector<Playing> data_;
 	int position_ = -1;
 protected:
 	void paintEvent(QPaintEvent *event);
 public:
 	explicit TimeCodeWidget(QWidget *parent = nullptr);
-	void setData(std::vector<char> const &data);
+	void setData(const std::vector<Playing> &data);
 	void setPosition(int pos);
 };
 

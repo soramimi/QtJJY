@@ -9,6 +9,14 @@ namespace Ui {
 class MainWindow;
 }
 
+enum class Playing : uint8_t {
+	Stop,
+	Space,
+	Marker,
+	Value0,
+	Value1,
+};
+
 class MainWindow : public QMainWindow {
 	Q_OBJECT
 private:
@@ -16,19 +24,17 @@ private:
 	struct Private;
 	Private *m;
 
-	void setTone(bool on);
-	void startJJY();
-	void setStatusLabel(const QString &text);
+	void setLabelText(const QString &text);
+	void makeData(const QDateTime &dt, std::vector<Playing> *out);
+	void updateUI();
 public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 private slots:
 	void outputAudio();
-	void timer_jjy();
+	void onInterval1ms();
+	void onInterval1s();
 	void on_pushButton_clicked();
-
-protected:
-	void timerEvent(QTimerEvent *);
 };
 
 #endif // MAINWINDOW_H
