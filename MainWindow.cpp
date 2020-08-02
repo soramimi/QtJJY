@@ -118,10 +118,13 @@ void MainWindow::updateUI()
 
 void MainWindow::outputAudio()
 {
-	if (m->playing == Playing::Marker || m->playing == Playing::Value0 || m->playing == Playing::Value1) {
-		// thru
-	} else {
+	if (m->playing == Playing::Stop) {
 		return;
+	}
+
+	int volume = m->volume;
+	if (m->playing == Playing::Space) {
+		volume /= 10;
 	}
 
 	std::vector<int16_t> buf;
@@ -138,7 +141,7 @@ void MainWindow::outputAudio()
 		for (int i = 0; i < n; i++) {
 			int v = 0;
 			if (add != 0) {
-				v += m->phase < M_PI ? m->volume : -m->volume;
+				v += m->phase < M_PI ? volume : -volume;
 			}
 			buf[i] = v;
 			m->phase += add;
